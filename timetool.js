@@ -39,12 +39,22 @@ class DateTool {
 	}
 
 	// 获取完整时间
-	getFullDate(){
-		return `${this.getYear()}${this.getMonth()}${this.getDay()}${this.getHours()}${this.getMinutes()}${this.getSeconds()}`
+	getFullDate(format){
+		const key = this.formatFullDate(format);
+		console.log(key)
+		if(key){
+			return `${this.getYear()}${this.getMonth()}${this.getDay()}`
+		}
+		return `${this.getYear()}/${this.getMonth()}/${this.getDay()} ${this.getHours()}:${this.getMinutes()}:${this.getSeconds()}`
 	}
-	formatFullDate(){
 
+	formatFullDate(format){
+		const reg_y_m_d = /^(Y{4})[(\/)|(\-)|(\:)|\s](M{2})[(\/)|(\-)|(\:)|\s](D{2})$/
+		const regex = new RegExp(reg_y_m_d);
+		return format.match(reg_y_m_d)
 	}
 
 }
 
+const dateTool = new DateTool();
+console.log(dateTool.getFullDate('YYYY/MM/DD'))
