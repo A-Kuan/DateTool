@@ -3,11 +3,6 @@ class DateTool {
 	constructor(){
 		this.date = new Date();
 	}
-
-	test(){
-		return this.date.toLocaleString()
-	}
-	
 	// 获取年份
 	getYear(){
 		return this.date.getFullYear()
@@ -43,7 +38,7 @@ class DateTool {
 		return this.formatFullDate(format);
 	}
 	// 格式化今日日期
-	formatFullDate(format){
+	formatFullDate(format = ''){
 		const symbol_y_between_m = format.charAt(4);
 		const symbol_m_between_d = format.charAt(7);
 		const symbol_d_between_H = format.charAt(10);
@@ -51,7 +46,7 @@ class DateTool {
 		const symbol_M_between_S = format.charAt(16);
 
 		// 1.匹配 yyyy/mm/dd
-		const reg_y_m_d = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})$/;
+		const reg_y_m_d = /^(y{4})[(/)|(\-)|(:)|\s](m{2})[(/)|(\-)|(:)|\s](d{2})$/;
 		const regex = new RegExp(reg_y_m_d);
 		if(regex.test(format)){
 			return {
@@ -60,7 +55,7 @@ class DateTool {
 			}
 		}
 		// 2.匹配 yyyy/mm/dd HH
-		const reg_y_m_d_H = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})[(\/)|(\-)|(\:)|\s](H{2})$/;
+		const reg_y_m_d_H = /^(y{4})[(/)|(\-)|(:)|\s](m{2})[(/)|(\-)|(:)|\s](d{2})[(/)|(\-)|(:)|\s](H{2})$/;
 		const regex_H = new RegExp(reg_y_m_d_H);
 		if(regex_H.test(format)){
 			return {
@@ -69,7 +64,7 @@ class DateTool {
 			}
 		}
 		// 3.匹配 yyyy/mm/dd HH：MM
-		const reg_y_m_d_H_M = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})[(\/)|(\-)|(\:)|\s](H{2})[(\/)|(\-)|(\:)|\s](M{2})$/;
+		const reg_y_m_d_H_M = /^(y{4})[(/)|(\-)|(:)|\s](m{2})[(/)|(\-)|(:)|\s](d{2})[(/)|(\-)|(:)|\s](H{2})[(/)|(\-)|(:)|\s](M{2})$/;
 		const regex_H_M = new RegExp(reg_y_m_d_H_M);
 		if(regex_H_M.test(format)){
 			return {
@@ -78,7 +73,7 @@ class DateTool {
 			}
 		}
 		// 4.匹配 yyyy/mm/dd HH：MM:SS
-		const reg_y_m_d_H_M_S = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})[(\/)|(\-)|(\:)|\s](H{2})[(\/)|(\-)|(\:)|\s](M{2})[(\/)|(\-)|(\:)|\s](S{2})$/;
+		const reg_y_m_d_H_M_S = /^(y{4})[(/)|(\-)|(:)|\s](m{2})[(/)|(\-)|(:)|\s](d{2})[(/)|(\-)|(:)|\s](H{2})[(/)|(\-)|(:)|\s](M{2})[(/)|(\-)|(:)|\s](S{2})$/;
 		const regex_H_M_S = new RegExp(reg_y_m_d_H_M_S);
 		if(regex_H_M_S.test(format)){
 			return {
@@ -94,3 +89,6 @@ class DateTool {
 	}
 
 }
+
+const Datetool = new DateTool();
+export default Datetool
