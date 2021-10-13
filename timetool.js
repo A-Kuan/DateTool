@@ -40,21 +40,57 @@ class DateTool {
 
 	// 获取完整时间
 	getFullDate(format){
-		const key = this.formatFullDate(format);
-		console.log(key)
-		if(key){
-			return `${this.getYear()}${this.getMonth()}${this.getDay()}`
-		}
-		return `${this.getYear()}/${this.getMonth()}/${this.getDay()} ${this.getHours()}:${this.getMinutes()}:${this.getSeconds()}`
+		return this.formatFullDate(format);
 	}
-
+	// 格式化今日日期
 	formatFullDate(format){
-		const reg_y_m_d = /^(Y{4})[(\/)|(\-)|(\:)|\s](M{2})[(\/)|(\-)|(\:)|\s](D{2})$/
+		const symbol_y_between_m = format.charAt(4);
+		const symbol_m_between_d = format.charAt(7);
+		const symbol_d_between_H = format.charAt(10);
+		const symbol_H_between_M = format.charAt(13);
+		const symbol_M_between_S = format.charAt(16);
+
+		// 1.匹配 yyyy/mm/dd
+		const reg_y_m_d = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})$/;
 		const regex = new RegExp(reg_y_m_d);
-		return format.match(reg_y_m_d)
+		if(regex.test(format)){
+			return {
+				'code': 1,
+				'date': `${this.getYear()}${symbol_y_between_m}${this.getMonth()}${symbol_m_between_d}${this.getDay()}`
+			}
+		}
+		// 2.匹配 yyyy/mm/dd HH
+		const reg_y_m_d_H = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})[(\/)|(\-)|(\:)|\s](H{2})$/;
+		const regex_H = new RegExp(reg_y_m_d_H);
+		if(regex_H.test(format)){
+			return {
+				'code': 2,
+				'date': `${this.getYear()}${symbol_y_between_m}${this.getMonth()}${symbol_m_between_d}${this.getDay()}${symbol_d_between_H}${this.getHours()}`
+			}
+		}
+		// 3.匹配 yyyy/mm/dd HH：MM
+		const reg_y_m_d_H_M = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})[(\/)|(\-)|(\:)|\s](H{2})[(\/)|(\-)|(\:)|\s](M{2})$/;
+		const regex_H_M = new RegExp(reg_y_m_d_H_M);
+		if(regex_H_M.test(format)){
+			return {
+				'code': 3,
+				'date': `${this.getYear()}${symbol_y_between_m}${this.getMonth()}${symbol_m_between_d}${this.getDay()}${symbol_d_between_H}${this.getHours()}${symbol_H_between_M}${this.getMinutes()}`
+			}
+		}
+		// 4.匹配 yyyy/mm/dd HH：MM:SS
+		const reg_y_m_d_H_M_S = /^(y{4})[(\/)|(\-)|(\:)|\s](m{2})[(\/)|(\-)|(\:)|\s](d{2})[(\/)|(\-)|(\:)|\s](H{2})[(\/)|(\-)|(\:)|\s](M{2})[(\/)|(\-)|(\:)|\s](S{2})$/;
+		const regex_H_M_S = new RegExp(reg_y_m_d_H_M_S);
+		if(regex_H_M_S.test(format)){
+			return {
+				'code': 4,
+				'date': `${this.getYear()}${symbol_y_between_m}${this.getMonth()}${symbol_m_between_d}${this.getDay()}${symbol_d_between_H}${this.getHours()}${symbol_H_between_M}${this.getMinutes()}${symbol_M_between_S}${this.getSeconds()}`
+			}
+		}
+		// 匹配出错时默认返回
+		return {
+			'code': 0,
+			'date': `${this.getYear()}/${this.getMonth()}/${this.getDay()} ${this.getHours()}:${this.getMinutes()}:${this.getSeconds()}`
+		}
 	}
 
 }
-
-const dateTool = new DateTool();
-console.log(dateTool.getFullDate('YYYY/MM/DD'))
